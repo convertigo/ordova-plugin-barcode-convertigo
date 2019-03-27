@@ -25,9 +25,15 @@ public class ConvScannerActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
 		int scannerActivityLayoutId = getApplication().getResources().getIdentifier("scanner_activity","layout",getApplication().getPackageName());
         setContentView(scannerActivityLayoutId);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                
-        _pagerAdapter = new ConvScannerPagerAdapter(getSupportFragmentManager());
+        String mode = "both";
+        if(this.barecodeOpts.getOnlyKeyboard()){
+            mode = "onlyKeyboard";
+        }
+        else if(this.barecodeOpts.getOnlyScan()){
+            mode = "onlyScan";
+        }
+
+        _pagerAdapter = new ConvScannerPagerAdapter(getSupportFragmentManager(),mode);
         
 		int viewPagerId = getApplication().getResources().getIdentifier("pager","id",getApplication().getPackageName());
         _viewPager =  findViewById(viewPagerId);
@@ -119,33 +125,62 @@ public class ConvScannerActivity extends FragmentActivity {
         setResult(Activity.RESULT_OK, dataIntent);
         finish();
     }
-
     private class ConvScannerPagerAdapter extends FragmentStatePagerAdapter {
 
-    	private Fragment _cameraPreviewFragment;
-    	private Fragment _manualInputFragment;
-    	
-        public ConvScannerPagerAdapter(android.support.v4.app.FragmentManager fm) {
+        private Fragment _cameraPreviewFragment;
+        private Fragment _manualInputFragment;
+        private String mode;
+
+        public ConvScannerPagerAdapter(android.support.v4.app.FragmentManager fm, String mode) {
             super(fm);
-            
-            _cameraPreviewFragment = new CameraPreviewFragment();
-            _manualInputFragment = new ManualInputFragment();
-            
+            this.mode = mode;
+            switch (mode){
+                case "onlyScan":
+                    _cameraPreviewFragment = new CameraPreviewFragment();
+                    break;
+                case "onlyKeyboard":
+                    _manualInputFragment = new ManualInputFragment();
+                    break;
+                case "both":
+                    _cameraPreviewFragment = new CameraPreviewFragment();
+                    _manualInputFragment = new ManualInputFragment();
+                    break;
+            }
         }
 
         @Override
         public Fragment getItem(int position) {
-        	if(position == 0) return _cameraPreviewFragment;
-        	else return  _manualInputFragment;
+            if(mode.equals("onlyScan")){
+                return _cameraPreviewFragment;
+            }
+            else if(mode.equals("onlyKeyboard")){
+                return _manualInputFragment;
+            }
+            else{
+                if(position == 0) return _cameraPreviewFragment;
+                else return  _manualInputFragment;
+            }
+
         }
 
         @Override
         public int getCount() {
-            return 2;
+            int val = 0;
+            switch (mode){
+                case "onlyScan":
+                    val = 1;
+                    break;
+                case "onlyKeyboard":
+                    val = 1;
+                    break;
+                case "both":
+                    val = 2;
+                    break;
+            }
+            return val;
         }
 
         public CameraPreviewFragment getCameraPreviewFragment() { return (CameraPreviewFragment) _cameraPreviewFragment; }
         public ManualInputFragment getManualInputFragment() { return (ManualInputFragment) _manualInputFragment; }
     }
-}
 
