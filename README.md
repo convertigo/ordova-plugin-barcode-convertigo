@@ -1,4 +1,4 @@
-# Convertigo Barcode Scanner Native Plugin#
+# Convertigo Barcode Scanner Native Plugin #
 
 This plugin allows for native Barcode scans 
 
