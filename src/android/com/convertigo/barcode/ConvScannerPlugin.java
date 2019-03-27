@@ -128,7 +128,7 @@ public class ConvScannerPlugin extends CordovaPlugin {
             }
 
             try{
-                onlyScan = jObj.getString("onlyScan");
+                onlyScan = jObj.getBoolean("onlyScan");
                 barecodeOpts.setOnlyScan(onlyScan);
             }
             catch (JSONException e){
@@ -136,7 +136,7 @@ public class ConvScannerPlugin extends CordovaPlugin {
             }
 
             try{
-                onlyKeyboard = jObj.getString("onlyKeyboard");
+                onlyKeyboard = jObj.getBoolean("onlyKeyboard");
                 barecodeOpts.setOnlyKeyboard(onlyKeyboard);
             }
             catch (JSONException e){
