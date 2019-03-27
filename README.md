@@ -36,7 +36,7 @@ let parameters = {
         laserColor: "#ff0000", laserEnabled: true, maskColor:"#eeeeee",
         textDown:"Mon super texte en bas", textUp: "Mon texte du haut (il est extraordinaire)",
         borderColor:"#ff0000", textUpColor:"#000000", textDownColor:"#000000", squareEnabled: true,
-        maskOpacity: 0.5, restrict: true, imgPath:"icon/favicon.png"};
+        maskOpacity: 0.5, restrict: true, imgPath:"icon/favicon.png", onlyScan: true, onlyKeyboard:false};
 
 var onSuccess = function(result){
     console.log("Result type: " + result.type + " Value: " result.result); 

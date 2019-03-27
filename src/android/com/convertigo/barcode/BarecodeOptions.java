@@ -46,6 +46,7 @@ public class BarecodeOptions implements Serializable {
     }
 
     public void setOnlyScan(Boolean onlyScan) {
+        this.onlyKeyboard = false;
         this.onlyScan = onlyScan;
     }
 
@@ -54,6 +55,7 @@ public class BarecodeOptions implements Serializable {
     }
 
     public void setOnlyKeyboard(Boolean onlyKeyboard) {
+        this.onlyScan = false;
         this.onlyKeyboard = onlyKeyboard;
     }
 

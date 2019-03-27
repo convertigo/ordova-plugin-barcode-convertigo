@@ -111,6 +111,8 @@ public class ConvScannerPlugin extends CordovaPlugin {
         Boolean squareEnabled;
         float maskOpacity;
         Boolean modeRestrict;
+        Boolean onlyScan;
+        Boolean onlyKeyboard;
 
         BarecodeOptions barecodeOpts = new BarecodeOptions();
 
@@ -125,6 +127,21 @@ public class ConvScannerPlugin extends CordovaPlugin {
                 Log.d("ConvBarcode", "Parameter restrict not set or incorrect");
             }
 
+            try{
+                onlyScan = jObj.getString("onlyScan");
+                barecodeOpts.setOnlyScan(onlyScan);
+            }
+            catch (JSONException e){
+                Log.d("ConvBarcode", "Parameter onlyScan not set or incorrect");
+            }
+
+            try{
+                onlyKeyboard = jObj.getString("onlyKeyboard");
+                barecodeOpts.setOnlyKeyboard(onlyKeyboard);
+            }
+            catch (JSONException e){
+                Log.d("ConvBarcode", "Parameter setOnlyKeyboard not set or incorrect");
+            }
             try{
                 imgPath = jObj.getString("imgPath");
                 barecodeOpts.setImgPath(imgPath);
