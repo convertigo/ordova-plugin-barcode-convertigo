@@ -6,7 +6,7 @@ This plugin allows for native Barcode scans
 Install this plugin like you would any other cordova plugin:
 ```
 #!shell
-cordova plugin add https://github.com/CharlesGrimont/cordova-plugin-barcode-convertigo.git@0.1.0
+cordova plugin add https://github.com/CharlesGrimont/cordova-plugin-barcode-convertigo.git#0.1.0
 ```
 ### Target Platforms ###
 * Android (4.4+)
