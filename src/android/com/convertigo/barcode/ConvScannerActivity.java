@@ -184,3 +184,4 @@ public class ConvScannerActivity extends FragmentActivity {
         public ManualInputFragment getManualInputFragment() { return (ManualInputFragment) _manualInputFragment; }
     }
 
+}
