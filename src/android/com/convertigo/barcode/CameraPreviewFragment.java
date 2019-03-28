@@ -55,6 +55,11 @@ public class CameraPreviewFragment	extends Fragment implements ConvZBarScannerVi
 			formats.add(BarcodeFormat.QRCODE);
 			_scannerView.setFormats(formats);
 		}
+		else if(this.barecodeOpts.getRestrictQr()){
+			List<BarcodeFormat> formats = new ArrayList<BarcodeFormat>();
+			formats.add(BarcodeFormat.QRCODE);
+			_scannerView.setFormats(formats);
+		}
 		else{
 			_scannerView.setFormats(BarcodeFormat.ALL_FORMATS);
 		}

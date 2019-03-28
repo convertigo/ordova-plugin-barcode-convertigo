@@ -111,6 +111,7 @@ public class ConvScannerPlugin extends CordovaPlugin {
         Boolean squareEnabled;
         float maskOpacity;
         Boolean modeRestrict;
+        Boolean modeRestrictQr;
         Boolean onlyScan;
         Boolean onlyKeyboard;
 
@@ -118,6 +119,14 @@ public class ConvScannerPlugin extends CordovaPlugin {
 
         try {
             JSONObject jObj = (JSONObject)this._args.get(0);
+
+            try{
+                modeRestrictQr = jObj.getBoolean("restrictQr");
+                barecodeOpts.SetRestrictQr(modeRestrictQr);
+            }
+            catch (JSONException e){
+                Log.d("ConvBarcode", "Parameter restrictQr not set or incorrect");
+            }
 
             try{
                 modeRestrict = jObj.getBoolean("restrict");

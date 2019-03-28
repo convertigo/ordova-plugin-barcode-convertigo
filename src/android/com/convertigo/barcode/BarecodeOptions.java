@@ -24,6 +24,15 @@ public class BarecodeOptions implements Serializable {
     private Boolean onlyKeyboard = false;
     private String imgPath;
     private boolean restrict;
+    private Boolean restrictQr;
+
+    public Boolean getRestrictQr() {
+        return restrictQr;
+    }
+
+    public void SetRestrictQr(Boolean restrictQr) {
+        this.restrictQr = restrictQr;
+    }
 
     public Boolean getRestrict() {
         return restrict;
