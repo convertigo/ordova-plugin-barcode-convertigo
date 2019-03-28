@@ -4,23 +4,22 @@ This plugin allows for native Barcode scans
 
 ### Install ###
 Install this plugin like you would any other cordova plugin:
-```
-#!shell
-cordova plugin add https://github.com/CharlesGrimont/cordova-plugin-barcode-convertigo.git#0.1.0
+```shell
+cordova plugin add https://github.com/convertigo/cordova-plugin-barcode-convertigo.git#0.1.5
 ```
 ### Target Platforms ###
 * Android (4.4+)
 
 ### Usage ###
-The plugin creates a global variable in your app: 
+Access
 ```
-#!javascript
+#!typescript
   window["ConvScannerPlugin"]
 ```
 
 This plugin allows one function:
 ```
-#!javascript
+#!typescript
 
 scan: function(parameters, onSuccessCallback, onCancelCallback)
 
@@ -31,7 +30,7 @@ Once called, these functions start their respective scan activities and returns 
 
 
 ```
-#!javascript
+#!typescript
 let parameters = {
         laserColor: "#ff0000", laserEnabled: true, maskColor:"#eeeeee",
         textDown:"Mon super texte en bas", textUp: "Mon texte du haut (il est extraordinaire)",
