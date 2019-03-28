@@ -74,6 +74,7 @@
 			<source-file src="src/android/com/convertigo/barcode/ForcedKeyboardLinearLayout.java" target-dir="src/com/convertigo/barcode"/>
 			<source-file src="src/android/com/convertigo/barcode/ManualInputFragment.java" target-dir="src/com/convertigo/barcode"/>
 			<source-file src="src/android/com/convertigo/barcode/ConvZBarScannerView.java" target-dir="src/com/convertigo/barcode"/>
+            <source-file src="src/android/com/convertigo/barcode/ConvViewPager.java" target-dir="src/com/convertigo/barcode"/>
 			</platform>
 
 
