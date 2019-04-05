@@ -300,6 +300,6 @@ public class ConvScannerPlugin extends CordovaPlugin {
      * by the OS while it's in the background.
      */
     public void onRestoreStateForActivityResult(Bundle state, CallbackContext callbackContext) {
-        this._cordovaCallbackContext = callbackContext;
+        _cordovaCallbackContext = callbackContext;
     }
 }
