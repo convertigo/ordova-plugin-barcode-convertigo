@@ -17,9 +17,6 @@ module.exports = {
 			console.error('JSON Error ConvBarcodeScanner'); 
 		},
 		'ConvBarcodeScanner',
-		'Scan', function (parameters) {
-			let array = [parameters];
-			return array;
-		});
+		'Scan', [parameters]);
 	}
 };
