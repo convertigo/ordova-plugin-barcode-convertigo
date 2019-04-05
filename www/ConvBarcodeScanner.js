@@ -1,5 +1,5 @@
 module.exports = {
-	scan: (parameters, onSuccessCallback, onCancelCallback)=>{
+	scan: function (parameters, onSuccessCallback, onCancelCallback){
 		cordova.exec(function(result){
 			if(result.returnCode == 0 && typeof(onCancelCallback) !== 'undefined') onCancelCallback();
 			else 
@@ -23,7 +23,7 @@ module.exports = {
 	
 };
 
-parametersAsArray = (parameters)=> {
+parametersAsArray = function (parameters) {
 	let array = [parameters];
 	return array;
 };
