@@ -254,8 +254,9 @@ public class ConvScannerPlugin extends CordovaPlugin {
             barecodeOpts.setTextDownColor("#000000");
         }
         //getBaseContext
-		Context context = cordova.getActivity().getApplicationContext();
+		Context context = cordova.getActivity().getBaseContext();
         Intent intent = new Intent(context, ConvScannerActivity.class);
+        intent.setPackage(cordova.getActivity().getApplicationContext().getPackageName());
         intent.putExtra("options",barecodeOpts);
 
 		cordova.startActivityForResult((CordovaPlugin) _this,	intent, QUICKSCAN_REQUEST_CODE);
@@ -299,7 +300,8 @@ public class ConvScannerPlugin extends CordovaPlugin {
      * need to implement the save/restore API in case the Activity gets killed
      * by the OS while it's in the background.
      */
+    @Override
     public void onRestoreStateForActivityResult(Bundle state, CallbackContext callbackContext) {
-        _cordovaCallbackContext = callbackContext;
+        this._cordovaCallbackContext = callbackContext;
     }
 }
