@@ -260,11 +260,6 @@ public class ConvScannerPlugin extends CordovaPlugin {
 
 		cordova.startActivityForResult((CordovaPlugin) _this,	intent, QUICKSCAN_REQUEST_CODE);
 	}
-    
-    @Override
-    public ExecutorService getThreadPool() {
-        return threadPool;
-    }
 	
 	public void onActivityResult(int requestCode, int resultCode, Intent intent)
 	{
