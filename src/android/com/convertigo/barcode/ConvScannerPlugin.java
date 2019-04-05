@@ -257,7 +257,7 @@ public class ConvScannerPlugin extends CordovaPlugin {
 		Context context = cordova.getActivity().getApplicationContext();
         Intent intent = new Intent(context, ConvScannerActivity.class);
         intent.putExtra("options",barecodeOpts);
-        
+
 		cordova.startActivityForResult((CordovaPlugin) _this,	intent, QUICKSCAN_REQUEST_CODE);
 	}
     
@@ -305,6 +305,6 @@ public class ConvScannerPlugin extends CordovaPlugin {
      * by the OS while it's in the background.
      */
     public void onRestoreStateForActivityResult(Bundle state, CallbackContext callbackContext) {
-        this.callbackContext = callbackContext;
+        this._cordovaCallbackContext = callbackContext;
     }
 }
