@@ -256,6 +256,8 @@ public class ConvScannerPlugin extends CordovaPlugin {
 		Context context = cordova.getActivity().getApplicationContext();
         Intent intent = new Intent(context, ConvScannerActivity.class);
         intent.putExtra("options",barecodeOpts);
+
+        this.activityResultKeepRunning = true;
 		cordova.startActivityForResult((CordovaPlugin) _this,	intent, QUICKSCAN_REQUEST_CODE);
 	}
 	
