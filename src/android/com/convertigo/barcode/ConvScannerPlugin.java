@@ -253,14 +253,18 @@ public class ConvScannerPlugin extends CordovaPlugin {
             barecodeOpts.setTextUpColor("#000000");
             barecodeOpts.setTextDownColor("#000000");
         }
+        //getBaseContext
 		Context context = cordova.getActivity().getApplicationContext();
         Intent intent = new Intent(context, ConvScannerActivity.class);
         intent.putExtra("options",barecodeOpts);
-
-        this.activityResultKeepRunning = true;
+        
 		cordova.startActivityForResult((CordovaPlugin) _this,	intent, QUICKSCAN_REQUEST_CODE);
 	}
-	
+    
+    @Override
+    public ExecutorService getThreadPool() {
+        return threadPool;
+    }
 	
 	public void onActivityResult(int requestCode, int resultCode, Intent intent)
 	{
@@ -293,5 +297,14 @@ public class ConvScannerPlugin extends CordovaPlugin {
 				}	
 			}
 		}
-	}
+    }
+    
+    /**
+     * This plugin launches an external Activity when the camera is opened, so we
+     * need to implement the save/restore API in case the Activity gets killed
+     * by the OS while it's in the background.
+     */
+    public void onRestoreStateForActivityResult(Bundle state, CallbackContext callbackContext) {
+        this.callbackContext = callbackContext;
+    }
 }
