@@ -13,8 +13,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.app.Activity;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.app.ActivityCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -24,69 +22,62 @@ import android.util.Log;
 import com.convertigo.*;
 import com.convertigo.barcode.BarecodeOptions;
 
+import androidx.core.content.ContextCompat;
+import androidx.core.app.ActivityCompat;
+
 public class ConvScannerPlugin extends CordovaPlugin {
 
-	private static int SCAN_REQUEST_CODE = 555;
-	private static int QUICKSCAN_REQUEST_CODE = 666;
-	private static int SETTINGSSCAN_REQUEST_CODE = 777;
-	private static final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
+    private static int SCAN_REQUEST_CODE = 555;
+    private static int QUICKSCAN_REQUEST_CODE = 666;
+    private static int SETTINGSSCAN_REQUEST_CODE = 777;
+    private static final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
 
-	private CordovaPlugin	_this;
+    private CordovaPlugin _this;
     private CallbackContext _cordovaCallbackContext;
-	public static final String CAMERA = Manifest.permission.CAMERA;
-	private JSONArray _args;
+    public static final String CAMERA = Manifest.permission.CAMERA;
+    private JSONArray _args;
 
-	public ConvScannerPlugin() {}
+    public ConvScannerPlugin() {
+    }
 
-	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
-		super.initialize(cordova, webView);
-		Log.i("convertigo","Init Plugin!");
-		this._this = this;
-	}
-	
+    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+        super.initialize(cordova, webView);
+        Log.i("convertigo", "Init Plugin!");
+        this._this = this;
+    }
 
-    
     public void onRequestPermissionResult(int requestCode, String[] permissions,
-                                         int[] grantResults) throws JSONException
-    {
-        for(int r:grantResults)
-        {
-            if(r == PackageManager.PERMISSION_DENIED)
-            {
+            int[] grantResults) throws JSONException {
+        for (int r : grantResults) {
+            if (r == PackageManager.PERMISSION_DENIED) {
                 _cordovaCallbackContext.error("Permission denied for camera");
                 return;
             }
         }
-        switch(requestCode)
-        {
+        switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_CAMERA:
                 this.start();
                 break;
         }
     }
 
-	protected void getCameraPermission(int requestCode)
-    {
+    protected void getCameraPermission(int requestCode) {
         cordova.requestPermission(this, requestCode, this.CAMERA);
     }
-	
-	public boolean execute(final String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+
+    public boolean execute(final String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         this._cordovaCallbackContext = callbackContext;
-		this._args = args;
-		
-        if(action.equals("Scan"))
-        {
+        this._args = args;
+
+        if (action.equals("Scan")) {
             cordova.getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    
-                    if(cordova.hasPermission(CAMERA))
-                    {
-                        //Exec
+
+                    if (cordova.hasPermission(CAMERA)) {
+                        // Exec
                         start();
-                    }
-                    else
-                    {
+                    } else {
 
                         getCameraPermission(MY_PERMISSIONS_REQUEST_CAMERA);
                     }
@@ -94,13 +85,13 @@ public class ConvScannerPlugin extends CordovaPlugin {
                 }
             });
         }
-		
-		return true;
-	}
-		
-	public void start(){
+
+        return true;
+    }
+
+    public void start() {
         String imgPath;
-		String laserColor;
+        String laserColor;
         String maskColor;
         String textDown;
         String textUp;
@@ -118,134 +109,118 @@ public class ConvScannerPlugin extends CordovaPlugin {
         BarecodeOptions barecodeOpts = new BarecodeOptions();
 
         try {
-            JSONObject jObj = (JSONObject)this._args.get(0);
+            JSONObject jObj = (JSONObject) this._args.get(0);
 
-            try{
+            try {
                 modeRestrictQr = jObj.getBoolean("restrictQr");
                 barecodeOpts.SetRestrictQr(modeRestrictQr);
-            }
-            catch (JSONException e){
+            } catch (JSONException e) {
                 Log.d("ConvBarcode", "Parameter restrictQr not set or incorrect");
             }
 
-            try{
+            try {
                 modeRestrict = jObj.getBoolean("restrict");
                 barecodeOpts.SetRestrict(modeRestrict);
-            }
-            catch (JSONException e){
+            } catch (JSONException e) {
                 Log.d("ConvBarcode", "Parameter restrict not set or incorrect");
             }
 
-            try{
+            try {
                 onlyScan = jObj.getBoolean("onlyScan");
                 barecodeOpts.setOnlyScan(onlyScan);
-            }
-            catch (JSONException e){
+            } catch (JSONException e) {
                 Log.d("ConvBarcode", "Parameter onlyScan not set or incorrect");
             }
 
-            try{
+            try {
                 onlyKeyboard = jObj.getBoolean("onlyKeyboard");
                 barecodeOpts.setOnlyKeyboard(onlyKeyboard);
-            }
-            catch (JSONException e){
+            } catch (JSONException e) {
                 Log.d("ConvBarcode", "Parameter setOnlyKeyboard not set or incorrect");
             }
-            try{
+            try {
                 imgPath = jObj.getString("imgPath");
                 barecodeOpts.setImgPath(imgPath);
-            }
-            catch (JSONException e){
+            } catch (JSONException e) {
                 Log.d("ConvBarcode", "Parameter imgPath not set or incorrect");
             }
 
-            try{
+            try {
                 laserColor = jObj.getString("laserColor");
                 barecodeOpts.setLaserColor(laserColor);
-            }
-            catch (JSONException e){
+            } catch (JSONException e) {
                 Log.d("ConvBarcode", "Parameter laserColor not set or incorrect");
             }
 
-            try{
+            try {
                 laserEnabled = jObj.getBoolean("laserEnabled");
                 barecodeOpts.setLaserEnabled(laserEnabled);
-            }
-            catch (JSONException e){
+            } catch (JSONException e) {
                 Log.d("ConvBarcode", "Parameter laserEnabled not set or incorrect");
             }
 
-            try{
+            try {
                 maskColor = jObj.getString("maskColor");
                 barecodeOpts.setMaskColor(maskColor);
-            }
-            catch (JSONException e){
+            } catch (JSONException e) {
                 Log.d("ConvBarcode", "Parameter maskColor not set or incorrect");
             }
 
-            try{
-                maskOpacity = (float)jObj.getDouble("maskOpacity");
+            try {
+                maskOpacity = (float) jObj.getDouble("maskOpacity");
                 barecodeOpts.setMaskOpacity(maskOpacity);
-            }
-            catch (JSONException e){
+            } catch (JSONException e) {
                 Log.d("ConvBarcode", "Parameter maskOpacity not set or incorrect");
             }
 
-            try{
+            try {
                 textDown = jObj.getString("textDown");
                 barecodeOpts.setTextDown(textDown);
-            }
-            catch (JSONException e){
+            } catch (JSONException e) {
                 Log.d("ConvBarcode", "Parameter textDown not set or incorrect");
             }
 
-            try{
+            try {
                 textUp = jObj.getString("textUp");
                 barecodeOpts.setTextUp(textUp);
-            }
-            catch (JSONException e){
+            } catch (JSONException e) {
                 Log.d("ConvBarcode", "Parameter textUp not set or incorrect");
             }
 
-            try{
+            try {
                 squareEnabled = jObj.getBoolean("squareEnabled");
                 barecodeOpts.setSquaredEnabled(squareEnabled);
-            }
-            catch (JSONException e){
+            } catch (JSONException e) {
                 Log.d("ConvBarcode", "Parameter squareEnabled not set or incorrect");
             }
 
-            try{
+            try {
                 borderColor = jObj.getString("borderColor");
                 barecodeOpts.setBorderColor(borderColor);
-            }
-            catch (JSONException e){
+            } catch (JSONException e) {
                 Log.d("ConvBarcode", "Parameter borderColor not set or incorrect");
             }
 
-            try{
+            try {
                 textUpColor = jObj.getString("textUpColor");
                 barecodeOpts.setTextUpColor(textUpColor);
-            }
-            catch (JSONException e){
+            } catch (JSONException e) {
                 Log.d("ConvBarcode", "Parameter textUpColor not set or incorrect");
             }
 
-            try{
+            try {
                 textDownColor = jObj.getString("textDownColor");
                 barecodeOpts.setTextDownColor(textDownColor);
-            }
-            catch (JSONException e){
+            } catch (JSONException e) {
                 Log.d("ConvBarcode", "Parameter textDownColor not set or incorrect");
             }
-
 
         } catch (JSONException e) {
             Log.d("ConvBarCode", "Cannot read parameters we will use default parameters");
             barecodeOpts.setLaserColor("#ff0000");
             barecodeOpts.setLaserEnabled(true);
             barecodeOpts.setMaskColor("#eeeeee");
-            barecodeOpts.setMaskOpacity((float)0.5);
+            barecodeOpts.setMaskOpacity((float) 0.5);
             barecodeOpts.setTextDown("My text down");
             barecodeOpts.setTextUp("My text up");
             barecodeOpts.setSquaredEnabled(false);
@@ -253,48 +228,45 @@ public class ConvScannerPlugin extends CordovaPlugin {
             barecodeOpts.setTextUpColor("#000000");
             barecodeOpts.setTextDownColor("#000000");
         }
-        //getBaseContext
-		Context context = cordova.getActivity().getBaseContext();
+        // getBaseContext
+        Context context = cordova.getActivity().getBaseContext();
         Intent intent = new Intent(context, ConvScannerActivity.class);
         intent.setPackage(cordova.getActivity().getApplicationContext().getPackageName());
-        intent.putExtra("options",barecodeOpts);
+        intent.putExtra("options", barecodeOpts);
 
-		cordova.startActivityForResult((CordovaPlugin) _this,	intent, QUICKSCAN_REQUEST_CODE);
-	}
-	
-	public void onActivityResult(int requestCode, int resultCode, Intent intent)
-	{
-		if(_cordovaCallbackContext != null)
-		{
-			if(requestCode != SETTINGSSCAN_REQUEST_CODE){
-				try{
-					JSONObject result = new JSONObject();
-					result.put("returnCode", resultCode);
-					if(resultCode != android.app.Activity.RESULT_CANCELED)
-					{				
-						String scanResultType = intent.getStringExtra("SCAN_RESULT_TYPE");
-						String scanResult = intent.getStringExtra("SCAN_RESULT");
-						result.put("type", scanResultType);
-						result.put("result", scanResult);
-					}
-					_cordovaCallbackContext.success(result);
-				} catch (JSONException e){
-					_cordovaCallbackContext.error("JSON Error @ Java side!");
-				}	
-			} else {
-				try{
-					JSONObject result = new JSONObject();
-					result.put("returnCode", resultCode);
-					result.put("armis_host", intent.getStringExtra("ARMIS_HOST"));
-					result.put("armis_port", intent.getStringExtra("ARMIS_PORT"));
-					_cordovaCallbackContext.success(result);
-				} catch (JSONException e){
-					_cordovaCallbackContext.error("JSON Error @ Java side!");
-				}	
-			}
-		}
+        cordova.startActivityForResult((CordovaPlugin) _this, intent, QUICKSCAN_REQUEST_CODE);
     }
-    
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (_cordovaCallbackContext != null) {
+            if (requestCode != SETTINGSSCAN_REQUEST_CODE) {
+                try {
+                    JSONObject result = new JSONObject();
+                    result.put("returnCode", resultCode);
+                    if (resultCode != android.app.Activity.RESULT_CANCELED) {
+                        String scanResultType = intent.getStringExtra("SCAN_RESULT_TYPE");
+                        String scanResult = intent.getStringExtra("SCAN_RESULT");
+                        result.put("type", scanResultType);
+                        result.put("result", scanResult);
+                    }
+                    _cordovaCallbackContext.success(result);
+                } catch (JSONException e) {
+                    _cordovaCallbackContext.error("JSON Error @ Java side!");
+                }
+            } else {
+                try {
+                    JSONObject result = new JSONObject();
+                    result.put("returnCode", resultCode);
+                    result.put("armis_host", intent.getStringExtra("ARMIS_HOST"));
+                    result.put("armis_port", intent.getStringExtra("ARMIS_PORT"));
+                    _cordovaCallbackContext.success(result);
+                } catch (JSONException e) {
+                    _cordovaCallbackContext.error("JSON Error @ Java side!");
+                }
+            }
+        }
+    }
+
     /**
      * This plugin launches an external Activity when the camera is opened, so we
      * need to implement the save/restore API in case the Activity gets killed

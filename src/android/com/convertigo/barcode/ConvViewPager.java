@@ -1,7 +1,7 @@
 package com.convertigo.barcode;
 
 import android.content.Context;
-import android.support.v4.view.ViewPager;
+import androidx.viewpager.widget.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
@@ -11,7 +11,8 @@ public class ConvViewPager extends ViewPager {
 
     public ConvViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
-        if((((ConvScannerActivity)context).barecodeOpts).getOnlyScan().equals(true) || (((ConvScannerActivity)context).barecodeOpts).getOnlyKeyboard().equals(true)){
+        if ((((ConvScannerActivity) context).barecodeOpts).getOnlyScan().equals(true)
+                || (((ConvScannerActivity) context).barecodeOpts).getOnlyKeyboard().equals(true)) {
             this.enabled = false;
         }
     }
