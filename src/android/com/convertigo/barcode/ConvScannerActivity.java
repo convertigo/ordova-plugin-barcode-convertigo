@@ -121,7 +121,7 @@ public class ConvScannerActivity extends FragmentActivity {
         private Fragment _manualInputFragment;
         private String mode;
 
-        public ConvScannerPagerAdapter(android.support.v4.app.FragmentManager fm, String mode) {
+        public ConvScannerPagerAdapter(androidx.fragment.app.FragmentManager fm, String mode) {
             super(fm);
             this.mode = mode;
             switch (mode) {
