@@ -1,6 +1,9 @@
 repositories {
-   mavenCentral()
+   maven {
+      url "https://m2.convertigo.com"
+   }
 }
 dependencies {
-   implementation 'me.dm7.barcodescanner:zbar:1.9.8'
+   implementation 'me.dm7.barcodescanner:core:1.9.13'
+   implementation 'me.dm7.barcodescanner:zbar:1.9.13'
 }
